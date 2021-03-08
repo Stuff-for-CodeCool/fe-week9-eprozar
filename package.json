@@ -17,7 +17,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "react-scripts build && mv build docs && git add . && git commit -m 'Deploy'"
+    "deploy": "rm -rf docs/ build/ && react-scripts build && mv ./build ./docs && git add . && git commit -m 'Deploy' && git push"
   },
   "eslintConfig": {
     "extends": [
