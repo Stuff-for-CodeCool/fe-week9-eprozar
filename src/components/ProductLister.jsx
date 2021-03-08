@@ -7,8 +7,8 @@ const perPage = 9;
 const ProductLister = ({ products }) => {
     const [index, setIndex] = useState(0);
 
-    const canPrev = false; //index > 0;
-    const canNext = false; //productList.length - perPage > index;
+    const canPrev = index > 0;
+    const canNext = productList.length - perPage > index;
 
     const prevButton = (e) => {
         e.preventDefault();
