@@ -6,6 +6,9 @@ const ProductCard = ({ product }) => (
         <div className="card-body">
             <h3>{product.name}</h3>
             <p>{product.description}</p>
+            <p>
+                <span>{product.price}</span>
+            </p>
             <a href="#" className="btn">
                 Add to cart
             </a>
