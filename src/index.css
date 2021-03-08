@@ -149,6 +149,11 @@ section {
     margin-bottom: 0;
 }
 
+.card-body .price {
+    text-align: right;
+    font-weight: bold;
+}
+
 .card-body .btn {
     margin-top: auto;
 }
