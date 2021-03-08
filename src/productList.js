@@ -1,7 +1,20 @@
 import faker from "faker";
 
-//  DON'T TOUCH THESE, ThEY'RE FAKE
-const pix = [
+//  DON'T TOUCH THESE, THEY'RE FAKE
+
+const buildEntry = (image) => ({
+    id: faker.random.uuid(),
+    name: faker.commerce.productName(),
+    price: faker.commerce.price(10, 400, 2, "$"),
+    shortDescription: faker.lorem.sentence(),
+    description: faker.lorem.sentences(),
+    image: image,
+    category: faker.commerce.department(),
+    discount: Math.floor(Math.random() * 35) / 100,
+    discountDate: faker.date.soon(2),
+});
+
+const generated = [
     "https://picsum.photos/id/0/500/500/",
     "https://picsum.photos/id/1/500/500/",
     "https://picsum.photos/id/10/500/500/",
@@ -102,24 +115,17 @@ const pix = [
     "https://picsum.photos/id/114/500/500/",
     "https://picsum.photos/id/115/500/500/",
     "https://picsum.photos/id/116/500/500/",
-];
+].map(buildEntry);
 
-const productList =
-    JSON.parse(localStorage.getItem("eprozar-products")) ||
-    Array(100)
-        .fill()
-        .map((_, i) => ({
-            id: faker.random.uuid(),
-            name: faker.commerce.productName(),
-            price: faker.commerce.price(10, 400, 2, "$"),
-            shortDescription: faker.lorem.sentence(),
-            description: faker.lorem.sentences(),
-            image: pix[i],
-            category: faker.commerce.department(),
-            discount: Math.floor(Math.random() * 35) / 100,
-            discountDate: faker.date.soon(2),
-        }));
+const checkLocalStorage = (generated) => {
+    const fromLS = localStorage.getItem("eprozar-products");
+    if (fromLS) {
+        return JSON.parse(fromLS);
+    }
+    localStorage.setItem("eprozar-products", JSON.stringify(generated));
+    return generated;
+};
 
-localStorage.setItem("eprozar-products", JSON.stringify(productList));
+const productList = checkLocalStorage();
 
 export default productList;

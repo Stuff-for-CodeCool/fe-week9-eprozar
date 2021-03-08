@@ -158,6 +158,11 @@ section {
     margin-top: auto;
 }
 
+.error {
+    font-weight: bold;
+    color: var(--color-accent);
+}
+
 /* NAVIGATION */
 
 #logo {
@@ -233,6 +238,10 @@ nav ul {
     display: grid;
     gap: 1em;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+.products .error {
+    grid-column: 1 / -1;
 }
 
 .products .btn-group {
