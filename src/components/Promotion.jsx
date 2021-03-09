@@ -45,7 +45,7 @@ const Promotion = ({ product, handlePurchase }) => {
                     </button>
                 </div>
             </div>
-        </div>
+        </section>
     );
 };
 

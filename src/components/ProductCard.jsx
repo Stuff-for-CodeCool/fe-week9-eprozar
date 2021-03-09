@@ -1,3 +1,5 @@
+import { Fragment } from "react";
+
 const ProductCard = ({
     product,
     shoppingCart,
@@ -23,16 +25,11 @@ const ProductCard = ({
                 <h3>{product.name}</h3>
                 <small>
                     {product.category.map((c, i) => (
-                        <>
-                            <a
-                                key={i}
-                                data-id={c}
-                                onClick={handleCategory}
-                                href="#"
-                            >
+                        <Fragment key={i}>
+                            <a data-id={c} onClick={handleCategory} href="/">
                                 {c}
                             </a>{" "}
-                        </>
+                        </Fragment>
                     ))}
                 </small>
                 <p>{product.description}</p>
