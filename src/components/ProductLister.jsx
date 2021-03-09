@@ -29,6 +29,7 @@ const ProductLister = ({
     shoppingCart,
     handlePurchase,
     handleProductNavigation,
+    handleFilterSelect,
 }) => {
     const allProducts = chunkArray(products);
 
@@ -48,7 +49,6 @@ const ProductLister = ({
     return (
         <section className="products">
             <div className="container">
-                
                 {allProducts[index]?.length ? (
                     allProducts[index].map((p) => (
                         <ProductCard
@@ -56,6 +56,7 @@ const ProductLister = ({
                             product={p}
                             shoppingCart={shoppingCart}
                             handlePurchase={handlePurchase}
+                            handleFilterSelect={handleFilterSelect}
                         />
                     ))
                 ) : (

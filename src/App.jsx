@@ -94,6 +94,7 @@ const App = () => {
                 shoppingCart={shoppingCart}
                 handlePurchase={handlePurchase}
                 handleProductNavigation={handleProductNavigation}
+                handleFilterSelect={handleFilterSelect}
             />
             <Footer />
         </>

@@ -1,7 +1,17 @@
-const ProductCard = ({ product, shoppingCart, handlePurchase }) => {
+const ProductCard = ({
+    product,
+    shoppingCart,
+    handlePurchase,
+    handleFilterSelect,
+}) => {
     const handleBuy = (e) => {
         e.preventDefault();
         handlePurchase(e.target.dataset.id);
+    };
+
+    const handleCategory = (e) => {
+        e.preventDefault();
+        handleFilterSelect(e.target.dataset.id);
     };
 
     return (
@@ -11,7 +21,20 @@ const ProductCard = ({ product, shoppingCart, handlePurchase }) => {
             </div>
             <div className="card-body">
                 <h3>{product.name}</h3>
-                <small>{product.category.join(", ")}</small>
+                <small>
+                    {product.category.map((c, i) => (
+                        <>
+                            <a
+                                key={i}
+                                data-id={c}
+                                onClick={handleCategory}
+                                href="#"
+                            >
+                                {c}
+                            </a>{" "}
+                        </>
+                    ))}
+                </small>
                 <p>{product.description}</p>
                 <strong>{product.price}</strong>
                 <button
