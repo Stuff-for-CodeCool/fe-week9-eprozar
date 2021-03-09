@@ -8,26 +8,27 @@ const Promotion = ({ product }) => {
         month: "short",
         day: "numeric",
     });
-    const newPrice = computeDiscount(
-        priceToVal(product.price),
-        product.discount
-    );
+
+    const newPrice =
+        Math.floor(
+            100 * computeDiscount(priceToVal(product.price), product.discount)
+        ) / 100;
 
     return (
         <section className="promotion">
-            <h2>Don't miss today's hot deal!</h2>
+            <div
+                className="container"
+                style={{ backgroundImage: `url(${product.image})` }}
+            >
+                <h2>Don't miss today's hot deal!</h2>
 
-            <div className="card">
-                <div className="card-image">
-                    <img src={product.image} alt={product.name} />
-                </div>
-                <div className="card-body">
+                <div className="card">
                     <h3>{product.name}</h3>
                     <p>{product.shortDescription}</p>
                     <p className="old-price">{product.price}</p>
                     <p>
-                        <span>${newPrice}</span> only on{" "}
-                        <span>{displayDate}</span>
+                        <strong>${newPrice}</strong> only on{" "}
+                        <strong>{displayDate}</strong>
                     </p>
                     <a href="#" className="btn">
                         Buy now

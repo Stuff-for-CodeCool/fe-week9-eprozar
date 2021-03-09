@@ -1,250 +1,219 @@
-*,
-*::before,
-*::after {
+/* GENERAL */
+
+* {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
 :root {
-    --color-text: #0d1321;
-    --color-back: #fcecc9;
-    --color-accent: #f93943;
-    --color-accent-light: #fcb0b3;
-    --color-secondary: #445e93;
+    --text: #333;
+    --bg: #fff;
+    --accent: #388e3c;
+    --shadow: rgba(0, 0, 0, 0.3);
 }
-
-/* @media (prefers-color-scheme: dark) {
-    :root {
-        --color-text: #fcecc9;
-        --color-back: #0d1321;
-    }
-} */
-
-/* GENERAL */
 
 html {
     font: 16px / 1.6 "Montserrat", sans-serif;
-    color: var(--color-text);
-    background-color: var(--color-back);
+    color: var(--text);
+    background: var(--bg);
 }
 
-body {
-    margin: 0;
+body,
+#root {
+    height: 100vh;
 }
 
 #root {
-    margin: 0 auto;
-    max-width: 55rem;
+    display: flex;
+    flex-direction: column;
+}
+
+#root > :not(:last-child) {
+    margin-bottom: 2rem;
 }
 
 ul {
-    margin: 0;
-    padding: 0;
     list-style: none;
 }
 
 a {
-    font-weight: bold;
+    color: var(--accent);
     text-decoration: none;
-    color: var(--color-accent);
+    outline: none;
 }
 
-h1,
-h2,
-h3,
-h4,
-p {
-    margin: 0;
-}
-
-h1,
-h2,
-h3,
-h4 {
-    font-family: "Courgette", cursive;
-}
-
-h1 {
-    font-size: 2rem;
-}
-
-h2 {
-    font-size: 1.75rem;
-}
-
-h3 {
-    font-size: 1.5rem;
-}
-
-h4 {
-    font-size: 1.25rem;
+a:hover,
+a:focus {
+    border-bottom: 2px solid;
 }
 
 img {
     width: 100%;
 }
 
-#root > * + * {
-    margin-top: 2rem;
+.container {
+    max-width: 55rem;
+    margin: 0 auto;
 }
 
-section {
-    padding: 3rem;
-}
-
-/* UTILITIES */
 .btn {
-    display: inline-block;
-    padding: 0.5rem 1rem;
-
-    font-size: 1.1rem;
-    color: var(--color-back);
-    background: var(--color-accent);
-    opacity: 1;
-
     text-align: center;
     text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: var(--accent);
+    background: var(--bg);
 
-    border: 0;
+    display: inline-block;
+    padding: 0.5em 1.5em;
+    border: 2px solid;
     border-radius: 0.25rem;
-    transition: opacity 0.25s linear, transform 0.25s ease-in-out;
+
+    box-shadow: 0 0.1rem 0.2rem var(--shadow);
 }
 
 .btn:hover,
 .btn:focus {
-    opacity: 0.9;
-    transform: scale(0.85);
+    background: var(--accent);
+    color: var(--bg);
+    border: 2px solid var(--accent);
     outline: none;
-}
-
-.btn-group {
-    padding: 1rem;
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    justify-content: center;
+    box-shadow: 0 0.2rem 0.2rem var(--shadow);
 }
 
 .card {
-    padding: 1rem;
-    border: 1px solid;
+    background: var(--bg);
     border-radius: 0.25rem;
+    box-shadow: 0 0 0.5rem var(--shadow), 0 1.5rem 1rem -0.5rem var(--shadow);
+    padding: 1rem;
     display: flex;
     flex-direction: column;
 }
 
 .card-image {
-    margin: -1rem -1rem 1rem;
+    margin: -1rem -1rem 0;
 }
 
 .card-body {
     display: flex;
     flex-direction: column;
-    flex: 1 0 auto;
+    flex: 1;
 }
 
-.card-body > * {
-    margin-bottom: 1.5rem;
-}
-.card-body > *:last-child {
-    margin-bottom: 0;
+.card-body > :not(:last-child) {
+    margin-bottom: 1rem;
 }
 
-.card-body .price {
+.card-body > strong {
     text-align: right;
-    font-weight: bold;
 }
 
-.card-body .btn {
+.card-body > .btn {
     margin-top: auto;
 }
 
 /* NAVIGATION */
 
-#logo {
-    color: var(--color-text);
-}
-
-nav {
+header nav {
+    max-width: 55rem;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-nav ul {
-    display: flex;
-    gap: 1em;
+header li {
+    display: inline-block;
 }
 
-/* PROMOTION */
+header li + li {
+    margin-left: 1rem;
+}
 
-.promotion {
+/* FILTER */
+/* PROMO */
+
+.promotion .container {
+    max-width: 55rem;
+    margin: 0 auto;
+    padding: 3em;
     position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .promotion h2 {
     position: absolute;
-    font-size: 3em;
-    text-align: center;
-    transform-origin: center;
-    transform: translate(-1em, -0.5em) rotate(-7deg);
-    color: var(--color-accent);
-    text-shadow: 0 0.1em 0.15em var(--color-text);
+    top: 2em;
+    left: 2em;
+    transform: rotate(-5deg);
+    font-size: 1.75em;
+    text-shadow: 0.1rem 0.1rem var(--bg), -0.1rem 0.1rem var(--bg),
+        0.1rem -0.1rem var(--bg), -0.1rem -0.1rem var(--bg);
+    color: var(--accent);
 }
 
 .promotion .card {
-    flex-direction: row;
+    padding: 2em;
+    background: var(--bg);
+    max-width: 25rem;
 }
 
-.promotion .card-image {
-    margin: -1rem 1rem -1.5rem -1rem;
-    max-width: 40%;
+.promotion .card > * + * {
+    margin-top: 0.5rem;
 }
 
-.promotion .card-body {
-    align-self: center;
-    text-align: right;
-}
-
-.promotion .card-body > * {
-    margin-bottom: 0.5rem;
-}
-
-.promotion .card-body > *:last-child {
-    margin-bottom: 0;
-}
-
-.promotion .card-body span,
-.promotion .card-body .old-price {
+.promotion .old-price {
+    text-decoration: line-through;
     font-weight: bold;
 }
 
-.promotion .card-body .old-price {
-    text-decoration: line-through;
-    color: var(--color-secondary);
-}
-
-.promotion .card-body span {
-    color: var(--color-accent);
-    font-size: 1.1rem;
+.promotion strong {
+    color: var(--accent);
 }
 
 /* PRODUCTS */
-.products {
+
+.products .container {
     display: grid;
-    gap: 1em;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    padding: 1rem;
 }
 
-.products .btn-group {
+.products nav {
     grid-column: 1 / -1;
 }
 
-/* FOOTER */
-footer {
-    text-align: center;
-    font-size: 0.85rem;
+.products nav ul {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    margin: 1rem auto;
 }
 
-footer p {
-    margin: 0.5em 0;
+/* FOOTER */
+
+footer {
+    margin-top: auto;
+    justify-self: flex-end;
+    background: var(--text);
+    color: var(--bg);
+    padding: 3rem;
+    text-align: center;
+}
+
+footer p + p {
+    margin-top: 0.5rem;
+}
+
+footer a {
+    border-bottom: 2px solid;
+    font-weight: bold;
+    color: var(--bg);
 }
