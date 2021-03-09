@@ -2,62 +2,47 @@ const priceToVal = (price) => parseFloat(price.slice(1), 10);
 const computeDiscount = (price, discount) =>
     Math.floor(100 * price * (1 - discount)) / 100;
 
-const Promotion = ({ product, handleCart }) => {
+const Promotion = ({ product, handlePurchase }) => {
     const date = new Date(product.discountDate);
 
     const displayDate = date.toLocaleString("en-us", {
         month: "short",
         day: "numeric",
     });
-    const newPrice = computeDiscount(
-        priceToVal(product.price),
-        product.discount
-    );
 
-    const handleClick = e => {
+    const newPrice =
+        Math.floor(
+            100 * computeDiscount(priceToVal(product.price), product.discount)
+        ) / 100;
+
+    const handleBuy = (e) => {
         e.preventDefault();
-        handleCart(e.target.dataset.id)
-    }
+        handlePurchase(e.target.dataset.id);
+    };
 
     return (
-        <div className="container">
-            <div className="card">
-                <div className="row g-0 fs-3">
-                    <div className="col">
-                        <img
-                            className="card-img"
-                            src={product.image}
-                            alt={product.name}
-                        />
-                    </div>
-                    <div className="col bg-secondary text-warning text-end p-5">
-                        <div className="card-body">
-                            <h5 className="card-title fs-2">{product.name}</h5>
-                            <p className="card-text">
-                                {product.shortDescription}
-                            </p>
-                            <p className="card-text">
-                                <small className="text-muted">
-                                    {product.price}
-                                </small>
-                            </p>
-                            <p className="card-text">
-                                <span className="fw-bold text-danger">
-                                    ${newPrice}
-                                </span>{" "}
-                                only on{" "}
-                                <span className="fw-bold">{displayDate}</span>
-                            </p>
-                            <a
-                                href="#"
-                                className="btn btn-lg btn-danger"
-                                data-id={product.id}
-                                onClick={handleClick}
-                            >
-                                Buy now
-                            </a>
-                        </div>
-                    </div>
+        <section className="promotion">
+            <div
+                className="container"
+                style={{ backgroundImage: `url(${product.image})` }}
+            >
+                <h2>Don't miss today's hot deal!</h2>
+
+                <div className="card">
+                    <h3>{product.name}</h3>
+                    <p>{product.shortDescription}</p>
+                    <p className="old-price">{product.price}</p>
+                    <p>
+                        <strong>${newPrice}</strong> only on{" "}
+                        <strong>{displayDate}</strong>
+                    </p>
+                    <button
+                        data-id={product.id}
+                        className="btn"
+                        onClick={handleBuy}
+                    >
+                        Buy now
+                    </button>
                 </div>
             </div>
         </div>

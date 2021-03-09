@@ -1,42 +1,51 @@
-const ProductCard = ({ product, cart, handleCart }) => {
-    const handleClick = (e) => {
+const ProductCard = ({
+    product,
+    shoppingCart,
+    handlePurchase,
+    handleFilterSelect,
+}) => {
+    const handleBuy = (e) => {
         e.preventDefault();
-        handleCart(e.target.dataset.id);
+        handlePurchase(e.target.dataset.id);
+    };
+
+    const handleCategory = (e) => {
+        e.preventDefault();
+        handleFilterSelect(e.target.dataset.id);
     };
 
     return (
-        <li>
-            <a href="#" data-id={product.id} onClick={handleCart}>
-                {product.name}
-            </a>
-        </li>
-    );
-
-    return (
-        <div className="col">
-            <div className="card">
-                <img
-                    src={product.image}
-                    className="card-img-top"
-                    alt={product.name}
-                />
-                <div className="card-body">
-                    <h5 className="card-title">{product.name}</h5>
-                    <p className="card-text">{product.description}</p>
-                    <div className="d-flex justify-content-between align-items-center">
-                        <span className="card-text fw-bold text-danger">
-                            ${product.price}
-                        </span>
-                        <a
-                            href="#"
-                            className="btn btn-primary"
-                            data-id={product.id}
-                            onClick={handleCart}
-                        >
-                            Add to cart
-                        </a>
-                    </div>
-                </div>
+        <div className="card">
+            <div className="card-image">
+                <img src={product.image} alt={product.name} />
+            </div>
+            <div className="card-body">
+                <h3>{product.name}</h3>
+                <small>
+                    {product.category.map((c, i) => (
+                        <>
+                            <a
+                                key={i}
+                                data-id={c}
+                                onClick={handleCategory}
+                                href="#"
+                            >
+                                {c}
+                            </a>{" "}
+                        </>
+                    ))}
+                </small>
+                <p>{product.description}</p>
+                <strong>{product.price}</strong>
+                <button
+                    className="btn"
+                    data-id={product.id}
+                    onClick={handleBuy}
+                >
+                    {shoppingCart.includes(product.id)
+                        ? "Remove from cart"
+                        : "Add to cart"}
+                </button>
             </div>
         </div>
     );

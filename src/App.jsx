@@ -1,74 +1,100 @@
 import { useState } from "react";
 
-import productList from "./productList";
+import { generated_products } from "./productGenerator";
 
 import Navigation from "./components/Navigation.jsx";
 import ProductFilter from "./components/ProductFilter.jsx";
 import Promotion from "./components/Promotion.jsx";
-import ProductLister from "./components/ProductLister.jsx";
+import ProductLister, { productsPerPage } from "./components/ProductLister.jsx";
 import Footer from "./components/Footer.jsx";
 
+const sort = (arr) => arr.sort((a, b) => (a.id > b.id ? -1 : 1));
+
 const App = () => {
-    const [products, setProducts] = useState(productList);
+    const promotedProduct = generated_products.sort((a, b) =>
+        Math.random() > 0.5 ? 1 : -1
+    )[0];
+
+    const [filteredProducts, setFilteredProducts] = useState(
+        sort(generated_products)
+    );
     const [category, setCategory] = useState("");
-    const [cart, setCart] = useState([]);
 
-    const handleInput = (value) => {
-        if (!value.length) {
-            setProducts(productList);
-        }
+    const [productPageIndex, setProductPageIndex] = useState(0);
 
+    const [shoppingCart, setShoppingCart] = useState([]);
+
+    const handleFilterInput = (value) => {
+        setFilteredProducts(
+            value.length
+                ? generated_products.filter((product) =>
+                      product.category
+                          .concat(product.name)
+                          .map((text) => text.toLowerCase())
+                          .join(" ")
+                          .includes(value)
+                  )
+                : sort(generated_products)
+        );
+        setProductPageIndex(0);
         setCategory("");
-        setProducts(
-            productList.filter((product) => {
-                return product.name.toLowerCase().includes(value);
-            })
-        );
     };
 
-    const handleSelect = (value) => {
-        setProducts(
-            value === "- Select category -"
-                ? productList
-                : productList.filter((product) => {
-                      console.log(product.category);
-                      return product.category === value;
-                  })
+    const handleFilterSelect = (value) => {
+        setFilteredProducts(
+            value.length
+                ? generated_products.filter((p) => p.category.includes(value))
+                : sort(generated_products)
         );
+        setProductPageIndex(0);
         setCategory(value);
+        document.querySelector("section.filter input[type=text]").value = "";
     };
 
-    const categories = productList
-        .map((product) => product.category)
-        .filter((e, i, a) => !a.slice(0, i).includes(e))
-        .sort((a, b) => (a > b ? 1 : -1));
+    const handleProductNavigation = (value) => {
+        if (value < 0) {
+            value = 0;
+        }
+        if (value >= Math.floor(filteredProducts / productsPerPage)) {
+            value = Math.floor(filteredProducts / productsPerPage) - 1;
+        }
+        setProductPageIndex(value);
+    };
 
-    const promotedProduct = productList
-        .sort((a, b) => (Math.random() > 0.5 ? 1 : -1))
-        .pop();
-
-    const handleCart = (id) => {
-        console.log(products);
-        setCart(
-            cart.includes(id) ? cart.filter((c) => c !== id) : [...cart, id]
+    const handlePurchase = (pid) => {
+        setShoppingCart(
+            shoppingCart.includes(pid)
+                ? shoppingCart.filter((p) => p !== pid)
+                : [...shoppingCart, pid]
         );
-        console.log(products);
     };
+
+    const categories = generated_products
+        .map((p) => p.category)
+        .reduce((a, v) => a.concat(v), [])
+        .filter((e, i, a) => !a.slice(0, i).includes(e))
+        .sort();
 
     return (
         <>
-            <Navigation cart={cart} />
+            <Navigation productCount={shoppingCart.length} />
             <ProductFilter
+                handleFilterInput={handleFilterInput}
                 category={category}
                 categories={categories}
-                handleInputAction={handleInput}
-                handleSelectAction={handleSelect}
+                handleFilterSelect={handleFilterSelect}
             />
-            <Promotion product={promotedProduct} handleCart={handleCart} />
+            <Promotion
+                product={promotedProduct}
+                handlePurchase={handlePurchase}
+            />
             <ProductLister
-                products={products}
-                cart={cart}
-                handleCart={handleCart}
+                products={filteredProducts}
+                index={productPageIndex}
+                shoppingCart={shoppingCart}
+                handlePurchase={handlePurchase}
+                handleProductNavigation={handleProductNavigation}
+                handleFilterSelect={handleFilterSelect}
             />
             <Footer />
         </>
