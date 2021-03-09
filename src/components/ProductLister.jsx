@@ -1,9 +1,8 @@
-import { useState } from "react";
 import ProductCard from "./ProductCard";
 
-const perPage = 6;
+export const productsPerPage = 6;
 
-const chunkArray = (array, size = perPage) => {
+const chunkArray = (array, size = productsPerPage) => {
     let result = [];
     for (let i = 0; i < array.length; i += size) {
         const chunk = array.slice(i, i + size);
@@ -12,57 +11,62 @@ const chunkArray = (array, size = perPage) => {
     return result;
 };
 
-const ProductLister = ({ products }) => {
-    const allProducts = chunkArray(products);
+const makeNavLink = (condition, handler, text) => {
+    if (!condition) return;
 
-    const [index, setIndex] = useState(0);
+    return (
+        <li>
+            <button className="btn" onClick={handler}>
+                {text}
+            </button>
+        </li>
+    );
+};
+
+const ProductLister = ({
+    products,
+    index,
+    shoppingCart,
+    handlePurchase,
+    handleProductNavigation,
+}) => {
+    const allProducts = chunkArray(products);
 
     const canPrev = index > 0;
     const canNext = index < allProducts.length - 1;
 
     const prevButton = (e) => {
         e.preventDefault();
-        setIndex(Math.max(0, index - 1));
+        handleProductNavigation(index - 1);
     };
 
     const nextButton = (e) => {
         e.preventDefault();
-        setIndex(Math.min(index + 1, products.length - 1));
+        handleProductNavigation(index + 1);
     };
 
     return (
         <section className="products">
             <div className="container">
-                {allProducts[index].length ? (
+                
+                {allProducts[index]?.length ? (
                     allProducts[index].map((p) => (
-                        <ProductCard key={p.id} product={p} />
+                        <ProductCard
+                            key={p.id}
+                            product={p}
+                            shoppingCart={shoppingCart}
+                            handlePurchase={handlePurchase}
+                        />
                     ))
                 ) : (
                     <p className="error">No products match your query.</p>
                 )}
+
                 {canPrev || canNext ? (
                     <nav>
                         <ul>
-                            {canPrev ? (
-                                <li>
-                                    <button
-                                        className="btn"
-                                        onClick={prevButton}
-                                    >
-                                        Previous
-                                    </button>
-                                </li>
-                            ) : null}
-                            {canNext ? (
-                                <li>
-                                    <button
-                                        className="btn"
-                                        onClick={nextButton}
-                                    >
-                                        Next
-                                    </button>
-                                </li>
-                            ) : null}
+                            {makeNavLink(canPrev, prevButton, "Previous")}
+                            {makeNavLink(canNext, nextButton, "Next")}
                         </ul>
                     </nav>
                 ) : null}

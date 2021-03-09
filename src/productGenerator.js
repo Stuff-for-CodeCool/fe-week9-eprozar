@@ -9,7 +9,11 @@ const buildEntry = (id) => ({
     shortDescription: faker.lorem.sentence(),
     description: faker.lorem.sentences(),
     image: `https://picsum.photos/id/${id}/500/500/`,
-    category: faker.commerce.department(),
+    category: Array(Math.floor(Math.random() * 3) + 1)
+        .fill()
+        .map(() => faker.commerce.department())
+        .filter((e, i, a) => !a.slice(0, i).includes(e))
+        .sort((a, b) => (a > b ? 1 : -1)),
     discount: Math.floor(Math.random() * 35) / 100,
     discountDate: faker.date.soon(2),
 });

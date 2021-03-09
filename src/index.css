@@ -52,6 +52,11 @@ img {
     width: 100%;
 }
 
+small {
+    color: #888;
+    font-size: 0.85em;
+}
+
 .container {
     max-width: 55rem;
     margin: 0 auto;
@@ -113,6 +118,11 @@ img {
     margin-top: auto;
 }
 
+.error {
+    font-weight: bold;
+    color: var(--accent);
+}
+
 /* NAVIGATION */
 
 header nav {
@@ -131,7 +141,44 @@ header li + li {
     margin-left: 1rem;
 }
 
+header li span {
+    font-weight: bold;
+    color: var(--bg);
+    background: var(--accent);
+    display: inline-block;
+    padding: 0.2rem 0.5rem;
+    border-radius: 50%;
+    margin-left: 0.5rem;
+}
+
 /* FILTER */
+
+.filter .container {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    justify-content: stretch;
+}
+
+.filter .container > * {
+    flex: 1;
+}
+
+.filter input,
+.filter select {
+    padding: 0.2rem;
+    border: 1px solid;
+    border-radius: 0.25rem;
+    background: var(--bg);
+    color: var(--text);
+}
+
+.filter input:focus,
+.filter select:focus {
+    color: var(--accent);
+    outline: none;
+}
+
 /* PROMO */
 
 .promotion .container {

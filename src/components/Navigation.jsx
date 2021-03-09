@@ -1,4 +1,4 @@
-const Navigation = () => (
+const Navigation = ({ productCount }) => (
     <header>
         <nav>
             <h1>
@@ -12,6 +12,7 @@ const Navigation = () => (
                 </li>
                 <li>
                     <a href="/">Shopping cart</a>
+                    {productCount > 0 ? <span>{productCount}</span> : null}
                 </li>
             </ul>
         </nav>

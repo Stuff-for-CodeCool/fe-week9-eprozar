@@ -1,7 +1,7 @@
 const priceToVal = (price) => parseFloat(price.slice(1), 10);
 const computeDiscount = (price, discount) => price * (1 - discount);
 
-const Promotion = ({ product }) => {
+const Promotion = ({ product, handlePurchase }) => {
     const date = new Date(product.discountDate);
 
     const displayDate = date.toLocaleString("en-us", {
@@ -13,6 +13,11 @@ const Promotion = ({ product }) => {
         Math.floor(
             100 * computeDiscount(priceToVal(product.price), product.discount)
         ) / 100;
+
+    const handleBuy = (e) => {
+        e.preventDefault();
+        handlePurchase(e.target.dataset.id);
+    };
 
     return (
         <section className="promotion">
@@ -30,9 +35,13 @@ const Promotion = ({ product }) => {
                         <strong>${newPrice}</strong> only on{" "}
                         <strong>{displayDate}</strong>
                     </p>
-                    <a href="#" className="btn">
+                    <button
+                        data-id={product.id}
+                        className="btn"
+                        onClick={handleBuy}
+                    >
                         Buy now
-                    </a>
+                    </button>
                 </div>
             </div>
         </section>
