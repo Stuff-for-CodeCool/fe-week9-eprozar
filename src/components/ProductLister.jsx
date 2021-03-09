@@ -27,7 +27,23 @@ const ProductLister = ({ products, cart, handleCart }) => {
                     Looks like no products match that
                 </div>
             )}
+            {products.length > 0 && (
+                <>
+                    <p>{products.length}</p>
+                    <ol>
+                        {products.slice(index, index + perPage).map((p) => (
+                            <ProductCard
+                                key={p.id}
+                                product={p}
+                                cart={cart}
+                                handleCart={handleCart}
+                            />
+                        ))}
+                    </ol>
+                </>
+            )}
 
+            {/*             
             {products.length > 0 && (
                 <div className="g-4 p-3 row row-cols-2 row-cols-lg-4 row-cols-md-3">
                     {products.slice(index, index + perPage).map((p) => (
@@ -40,6 +56,7 @@ const ProductLister = ({ products, cart, handleCart }) => {
                     ))}
                 </div>
             )}
+             */}
 
             {(canPrev || canNext) && (
                 <nav aria-label="Page navigation example" className="p-3">

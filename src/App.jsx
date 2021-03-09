@@ -13,31 +13,29 @@ const App = () => {
     const [category, setCategory] = useState("");
     const [cart, setCart] = useState([]);
 
-    const handleInput = (e) => {
-        e.preventDefault();
-        if (!e.target.value.length) {
+    const handleInput = (value) => {
+        if (!value.length) {
             setProducts(productList);
         }
 
         setCategory("");
         setProducts(
             productList.filter((product) => {
-                return product.name.toLowerCase().includes(e.target.value);
+                return product.name.toLowerCase().includes(value);
             })
         );
     };
 
-    const handleSelect = (e) => {
-        e.preventDefault();
+    const handleSelect = (value) => {
         setProducts(
-            e.target.value === "- Select category -"
+            value === "- Select category -"
                 ? productList
                 : productList.filter((product) => {
                       console.log(product.category);
-                      return product.category === e.target.value;
+                      return product.category === value;
                   })
         );
-        setCategory(e.target.value);
+        setCategory(value);
     };
 
     const categories = productList
@@ -49,13 +47,12 @@ const App = () => {
         .sort((a, b) => (Math.random() > 0.5 ? 1 : -1))
         .pop();
 
-    const handleCart = (e) => {
-        e.preventDefault();
+    const handleCart = (id) => {
+        console.log(products);
         setCart(
-            cart.includes(e.target.dataset.id)
-                ? cart.filter((c) => c !== e.target.dataset.id)
-                : [...cart, e.target.dataset.id]
+            cart.includes(id) ? cart.filter((c) => c !== id) : [...cart, id]
         );
+        console.log(products);
     };
 
     return (
@@ -64,8 +61,8 @@ const App = () => {
             <ProductFilter
                 category={category}
                 categories={categories}
-                handleInput={handleInput}
-                handleSelect={handleSelect}
+                handleInputAction={handleInput}
+                handleSelectAction={handleSelect}
             />
             <Promotion product={promotedProduct} handleCart={handleCart} />
             <ProductLister

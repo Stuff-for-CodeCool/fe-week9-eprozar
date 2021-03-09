@@ -115,7 +115,10 @@ const generated = [
     "https://picsum.photos/id/114/500/500/",
     "https://picsum.photos/id/115/500/500/",
     "https://picsum.photos/id/116/500/500/",
-].map(buildEntry);
+]
+    .slice(0, 10)
+    .map(buildEntry)
+    .sort((a, b) => (a.id > b.id ? 1 : -1));
 
 const checkLocalStorage = (generated) => {
     const fromLS = localStorage.getItem("eprozar-products");
@@ -126,6 +129,6 @@ const checkLocalStorage = (generated) => {
     return generated;
 };
 
-const productList = checkLocalStorage();
+const productList = checkLocalStorage(generated);
 
 export default productList;

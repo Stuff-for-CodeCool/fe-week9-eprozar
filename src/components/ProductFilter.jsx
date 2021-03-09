@@ -1,4 +1,19 @@
-const ProductFilter = ({ category, categories, handleInput, handleSelect }) => {
+const ProductFilter = ({
+    category,
+    categories,
+    handleInputAction,
+    handleSelectAction,
+}) => {
+    const handleInput = (e) => {
+        e.preventDefault();
+        handleInputAction(e.target.value);
+    };
+
+    const handleSelect = (e) => {
+        e.preventDefault();
+        handleSelectAction(e.target.value);
+    };
+
     return (
         <div className="container">
             <form className="p-3">

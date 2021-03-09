@@ -14,6 +14,11 @@ const Promotion = ({ product, handleCart }) => {
         product.discount
     );
 
+    const handleClick = e => {
+        e.preventDefault();
+        handleCart(e.target.dataset.id)
+    }
+
     return (
         <div className="container">
             <div className="card">
@@ -43,7 +48,12 @@ const Promotion = ({ product, handleCart }) => {
                                 only on{" "}
                                 <span className="fw-bold">{displayDate}</span>
                             </p>
-                            <a href="#" className="btn btn-lg btn-danger" data-id={product.id} onClick={handleCart}>
+                            <a
+                                href="#"
+                                className="btn btn-lg btn-danger"
+                                data-id={product.id}
+                                onClick={handleClick}
+                            >
                                 Buy now
                             </a>
                         </div>
