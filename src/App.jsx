@@ -54,37 +54,37 @@ const App = () => {
         setPriceUnder(0);
         document.querySelector("section.filter input[type=text]").value = "";
     };
-    
+
     const handleNumber = (value) => {
         setFilteredProducts(
             value > 0
                 ? generated_products.filter(
                       (p) => parseFloat(p.price.slice(1)) <= value
-                      )
-                      : sort(generated_products)
-                      );
-                      setProductPageIndex(0);
-                      setCategory(0);
-                    };
-                    
-                    const handleProductNavigation = (value) => {
-                        if (value < 0) {
-                            value = 0;
-                        }
+                  )
+                : sort(generated_products)
+        );
+        setProductPageIndex(0);
+        setCategory(0);
+    };
+
+    const handleProductNavigation = (value) => {
+        if (value < 0) {
+            value = 0;
+        }
         if (value >= Math.floor(filteredProducts / productsPerPage)) {
             value = Math.floor(filteredProducts / productsPerPage) - 1;
         }
         setProductPageIndex(value);
     };
-    
+
     const handlePurchase = (pid) => {
         setShoppingCart(
             shoppingCart.includes(pid)
-            ? shoppingCart.filter((p) => p !== pid)
+                ? shoppingCart.filter((p) => p !== pid)
                 : [...shoppingCart, pid]
-                );
+        );
     };
-    
+
     const reset = (e) => {
         e.preventDefault();
         setFilteredProducts(generated_products);
@@ -103,6 +103,7 @@ const App = () => {
     return (
         <>
             <Navigation productCount={shoppingCart.length} />
+
             <ProductFilter
                 handleFilterInput={handleFilterInput}
                 category={category}
@@ -111,10 +112,12 @@ const App = () => {
                 handleNumber={handleNumber}
                 reset={reset}
             />
+
             <Promotion
                 product={promotedProduct}
                 handlePurchase={handlePurchase}
             />
+
             <ProductLister
                 products={filteredProducts}
                 index={productPageIndex}
@@ -123,6 +126,7 @@ const App = () => {
                 handleProductNavigation={handleProductNavigation}
                 handleFilterSelect={handleFilterSelect}
             />
+
             <Footer />
         </>
     );
