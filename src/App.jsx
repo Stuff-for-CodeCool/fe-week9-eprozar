@@ -24,6 +24,8 @@ const App = () => {
 
     const [shoppingCart, setShoppingCart] = useState([]);
 
+    const [priceUnder, setPriceUnder] = useState(0)
+
     const handleFilterInput = (value) => {
         setFilteredProducts(
             value.length
@@ -38,8 +40,9 @@ const App = () => {
         );
         setProductPageIndex(0);
         setCategory("");
+        setPriceUnder(0);
     };
-
+    
     const handleFilterSelect = (value) => {
         setFilteredProducts(
             value.length
@@ -48,8 +51,19 @@ const App = () => {
         );
         setProductPageIndex(0);
         setCategory(value);
+        setPriceUnder(0);
         document.querySelector("section.filter input[type=text]").value = "";
     };
+
+    const handleNumber = value => {
+        setFilteredProducts(
+            value > 0
+                ? generated_products.filter((p) => parseFloat(p.price.slice(1)) <= value)
+                : sort(generated_products)
+        );
+        setProductPageIndex(0);
+        setCategory(0);
+    }
 
     const handleProductNavigation = (value) => {
         if (value < 0) {
@@ -83,6 +97,8 @@ const App = () => {
                 category={category}
                 categories={categories}
                 handleFilterSelect={handleFilterSelect}
+                price={priceUnder}
+                handleNumber={handleNumber}
             />
             <Promotion
                 product={promotedProduct}
