@@ -35,7 +35,7 @@ const ProductCard = ({
                 <p>{product.description}</p>
                 <strong>{product.price}</strong>
                 <button
-                    className="btn"
+                    className="btn shadow"
                     data-id={product.id}
                     onClick={handleBuy}
                 >

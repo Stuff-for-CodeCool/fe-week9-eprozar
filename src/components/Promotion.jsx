@@ -23,7 +23,7 @@ const Promotion = ({ product, handlePurchase }) => {
     return (
         <section className="promotion">
             <div
-                className="container"
+                className="container shadow"
                 style={{ backgroundImage: `url(${product.image})` }}
             >
                 <h2>Don't miss today's hot deal!</h2>
@@ -38,7 +38,7 @@ const Promotion = ({ product, handlePurchase }) => {
                     </p>
                     <button
                         data-id={product.id}
-                        className="btn"
+                        className="btn shadow"
                         onClick={handleBuy}
                     >
                         Buy now

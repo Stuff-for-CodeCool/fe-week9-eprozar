@@ -62,6 +62,32 @@ small {
     margin: 0 auto;
 }
 
+.shadow {
+    position: relative;
+    box-shadow: 0 0.1rem 0.2rem var(--shadow);
+}
+
+.shadow::before,
+.shadow::after {
+    position: absolute;
+    z-index: -1;
+    top: calc(100% - 2rem);
+    bottom: 0.5rem;
+    left: 0.5rem;
+    right: 0.5rem;
+    content: "";
+    transform: rotate(3deg);
+    box-shadow: 0 0 1rem var(--shadow);
+}
+.shadow::after {
+    transform: rotate(-3deg);
+}
+
+.shadow:hover,
+.shadow:focus {
+    box-shadow: 0 0.2rem 0.2rem var(--shadow);
+}
+
 .btn {
     text-align: center;
     text-decoration: none;
@@ -75,16 +101,16 @@ small {
     border: 2px solid;
     border-radius: 0.25rem;
 
-    box-shadow: 0 0.1rem 0.2rem var(--shadow);
+    cursor: pointer;
 }
 
+.btn.active,
 .btn:hover,
 .btn:focus {
     background: var(--accent);
     color: var(--bg);
     border: 2px solid var(--accent);
     outline: none;
-    box-shadow: 0 0.2rem 0.2rem var(--shadow);
 }
 
 .card {
@@ -195,6 +221,11 @@ header li span {
     align-items: flex-end;
 }
 
+.promotion .container.shadow::before,
+.promotion .container.shadow::after {
+    bottom: 1.5rem;
+}
+
 .promotion h2 {
     position: absolute;
     top: 2em;
@@ -229,7 +260,7 @@ header li span {
 
 .products .container {
     display: grid;
-    gap: 1rem;
+    gap: 2rem 1rem;
     grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
     padding: 1rem;
 }
@@ -240,6 +271,7 @@ header li span {
 
 .products nav ul {
     display: flex;
+    flex-wrap: wrap;
     gap: 1rem;
     justify-content: center;
     margin: 1rem auto;

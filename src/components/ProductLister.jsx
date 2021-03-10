@@ -45,6 +45,11 @@ const ProductLister = ({
         e.preventDefault();
         handleProductNavigation(index + 1);
     };
+    
+    const handleNavNumber = e => {
+        e.preventDefault();
+        handleProductNavigation(e.target.dataset.page);
+    }
 
     return (
         <section className="products">
@@ -67,6 +72,17 @@ const ProductLister = ({
                     <nav>
                         <ul>
                             {makeNavLink(canPrev, prevButton, "Previous")}
+                            
+                            {allProducts.map((_, i) => (
+                                <li key={i}>
+                                    <button
+                                        className={i === index ? "btn active" : "btn"}
+                                        data-page={i}
+                                        onClick={handleNavNumber}
+                                    >{i + 1}</button>
+                                </li>
+                            ))}
+
                             {makeNavLink(canNext, nextButton, "Next")}
                         </ul>
                     </nav>
