@@ -11,13 +11,16 @@ import Footer from "./components/Footer.jsx";
 const sort = (arr) => arr.sort((a, b) => (a.id > b.id ? -1 : 1));
 
 const App = () => {
-    const promotedProduct = generated_products.sort((a, b) =>
-        Math.random() > 0.5 ? 1 : -1
-    )[0];
-
     const [filteredProducts, setFilteredProducts] = useState(
         sort(generated_products)
     );
+
+    const [promotedProducts, setPromotedProducts] = useState([
+        generated_products
+            .sort((a, b) => (Math.random() > 0.5 ? 1 : -1))
+            .map((p) => p.id)[0],
+    ]);
+
     const [category, setCategory] = useState("");
 
     const [productPageIndex, setProductPageIndex] = useState(0);
@@ -100,6 +103,14 @@ const App = () => {
         .filter((e, i, a) => !a.slice(0, i).includes(e))
         .sort();
 
+    const promote = (pid, set) => {
+        setPromotedProducts(
+            set
+                ? [...promotedProducts, pid]
+                : promotedProducts.filter((f) => f !== pid)
+        );
+    };
+
     return (
         <>
             <Navigation productCount={shoppingCart.length} />
@@ -114,8 +125,8 @@ const App = () => {
             />
 
             <Promotion
-                product={promotedProduct}
-                handlePurchase={handlePurchase}
+                promoted={promotedProducts}
+                products={generated_products}
             />
 
             <ProductLister
@@ -125,6 +136,8 @@ const App = () => {
                 handlePurchase={handlePurchase}
                 handleProductNavigation={handleProductNavigation}
                 handleFilterSelect={handleFilterSelect}
+                promote={promote}
+                promoted={promotedProducts}
             />
 
             <Footer />

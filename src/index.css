@@ -144,6 +144,7 @@ small {
     margin-top: auto;
 }
 
+.card-body label,
 .error {
     font-weight: bold;
     color: var(--accent);
@@ -275,6 +276,14 @@ header li span {
     gap: 1rem;
     justify-content: center;
     margin: 1rem auto;
+}
+
+.products label {
+    cursor: pointer;
+}
+
+.products label input {
+    display: none;
 }
 
 /* FOOTER */

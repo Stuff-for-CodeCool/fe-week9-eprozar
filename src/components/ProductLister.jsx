@@ -30,6 +30,8 @@ const ProductLister = ({
     handlePurchase,
     handleProductNavigation,
     handleFilterSelect,
+    promote,
+    promoted,
 }) => {
     const allProducts = chunkArray(products);
 
@@ -62,6 +64,8 @@ const ProductLister = ({
                             shoppingCart={shoppingCart}
                             handlePurchase={handlePurchase}
                             handleFilterSelect={handleFilterSelect}
+                            promote={promote}
+                            promoted={promoted}
                         />
                     ))
                 ) : (

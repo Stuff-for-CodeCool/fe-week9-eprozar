@@ -5,6 +5,8 @@ const ProductCard = ({
     shoppingCart,
     handlePurchase,
     handleFilterSelect,
+    promote,
+    promoted,
 }) => {
     const handleBuy = (e) => {
         e.preventDefault();
@@ -14,6 +16,11 @@ const ProductCard = ({
     const handleCategory = (e) => {
         e.preventDefault();
         handleFilterSelect(e.target.dataset.id);
+    };
+
+    const handlePromotion = (e) => {
+        e.preventDefault();
+        promote(e.target.dataset.pid, e.target.checked);
     };
 
     return (
@@ -34,6 +41,17 @@ const ProductCard = ({
                 </small>
                 <p>{product.description}</p>
                 <strong>{product.price}</strong>
+                <label>
+                    {promoted.includes(product.id)
+                        ? `Remove ${product.name} from promotion list`
+                        : `Add ${product.name} to promotion list`}
+                    <input
+                        type="checkbox"
+                        data-pid={product.id}
+                        onChange={handlePromotion}
+                        checked={promoted.includes(product.id)}
+                    />
+                </label>
                 <button
                     className="btn shadow"
                     data-id={product.id}
