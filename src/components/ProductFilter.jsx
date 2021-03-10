@@ -3,10 +3,9 @@ const ProductFilter = ({
     category,
     categories,
     handleFilterSelect,
-    price,
-    handleNumber
+    handleNumber,
+    reset,
 }) => {
-    
     const handleInput = (e) => {
         e.preventDefault();
         handleFilterInput(e.target.value);
@@ -17,10 +16,10 @@ const ProductFilter = ({
         handleFilterSelect(e.target.value);
     };
 
-    const handlePrice = e => {
-        e.preventDefault()
-        handleNumber(e.target.value)
-    }
+    const handlePrice = (e) => {
+        e.preventDefault();
+        handleNumber(e.target.value);
+    };
 
     return (
         <section className="filter">
@@ -35,12 +34,9 @@ const ProductFilter = ({
                     <option value="">Select a category</option>
                     {categories.length
                         ? categories.map((category) => (
-                            <option
-                                key={category}
-                                value={category}
-                            >
-                                {category}
-                            </option>
+                              <option key={category} value={category}>
+                                  {category}
+                              </option>
                           ))
                         : null}
                 </select>
@@ -52,6 +48,10 @@ const ProductFilter = ({
                     placeholder="Price under..."
                     onChange={handlePrice}
                 />
+
+                <button className="btn" onClick={reset}>
+                    Reset all filters
+                </button>
             </div>
         </section>
     );
